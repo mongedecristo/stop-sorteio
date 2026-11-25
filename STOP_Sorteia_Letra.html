@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STOP</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            font-family: "Arial Black", Impact, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(ellipse at top, #26366a 0, #10172d 48%, #080c18 100%);
+            color: #f4f7ff;
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            max-width: 48rem;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        h1 {
+            color: #dce7ff;
+            font-family: "Arial Black", Impact, sans-serif;
+            letter-spacing: 0.04em;
+        }
+
+        .painel-sorteio {
+            background: rgba(15, 23, 48, 0.82);
+            border: 1px solid rgba(119, 164, 255, 0.35);
+            border-radius: 1.5rem;
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.35);
+            margin: 2rem auto;
+            max-width: 34rem;
+            padding: 1.5rem;
+        }
+
+        .configuracao {
+            background: rgba(15, 23, 48, 0.82);
+            border: 1px solid rgba(119, 164, 255, 0.35);
+            border-radius: 1.5rem;
+            margin: 2rem auto;
+            max-width: 34rem;
+            padding: 1.5rem;
+        }
+
+        #letras-iniciais {
+            background: rgba(5, 10, 24, 0.75);
+            border: 1px solid rgba(119, 164, 255, 0.55);
+            border-radius: 0.75rem;
+            box-sizing: border-box;
+            color: #72f6e5;
+            font-family: "Arial Black", Impact, sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.16em;
+            margin: 0.75rem 0;
+            padding: 0.8rem 1rem;
+            text-align: center;
+            text-transform: uppercase;
+            width: 100%;
+        }
+
+        #letras-iniciais:focus {
+            border-color: #72f6e5;
+            box-shadow: 0 0 1rem rgba(114, 246, 229, 0.25);
+            outline: none;
+        }
+
+        #erro-configuracao {
+            color: #ff9a9a;
+            min-height: 1.5em;
+        }
+
+        #letra {
+            color: #ffcf70;
+            font-family: "Arial Black", Impact, sans-serif;
+            font-size: clamp(3.5rem, 11vw, 4rem);
+            font-weight: bold;
+            margin: 0.5rem 0;
+            text-shadow: 0 0 1.5rem rgba(255, 179, 71, 0.35);
+        }
+
+        .rotulo-contagem {
+            color: #b7c8f5;
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 0.22em;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .tempo-partida {
+            align-items: center;
+            border-bottom: 1px solid rgba(119, 164, 255, 0.25);
+            color: #b7c8f5;
+            display: flex;
+            font-size: 0.9rem;
+            font-weight: bold;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+        }
+
+        #tempo-partida {
+            color: #ffcf70;
+            font-family: "Arial Black", Impact, sans-serif;
+            font-size: 1.3rem;
+            text-shadow: 0 0 0.8rem rgba(255, 207, 112, 0.45);
+        }
+
+        #contagem {
+            align-items: center;
+            color: #72f6e5;
+            display: flex;
+            font-family: "Arial Black", Impact, sans-serif;
+            font-size: clamp(3rem, 10vw, 3.6rem);
+            font-weight: 900;
+            justify-content: center;
+            line-height: 1;
+            margin: 0.35rem 0;
+            min-height: 4rem;
+            text-shadow: 0 0 0.5rem rgba(114, 246, 229, 0.65), 0 0 1.8rem rgba(58, 225, 209, 0.4);
+        }
+
+        #numero-contagem {
+            animation: pulsar 1s ease-in-out infinite;
+        }
+
+        #desenho {
+            color: #c6d6ff;
+            font-size: 1rem;
+            line-height: 1;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        button {
+            background: linear-gradient(135deg, #70f4df, #79a8ff);
+            border: 0;
+            border-radius: 999px;
+            color: #10172d;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 0.8rem 1.4rem;
+            transition: filter 0.2s ease, transform 0.2s ease;
+        }
+
+        button:hover:not(:disabled) {
+            filter: brightness(1.12);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            cursor: wait;
+            opacity: 0.6;
+        }
+
+        #alfabeto {
+            color: #72f6e5;
+            font-family: "Arial Black", Impact, sans-serif;
+            font-size: 1rem;
+            font-weight: normal;
+            margin: 1rem 0 0;
+            overflow-x: auto;
+            text-shadow: 0 0 0.3rem rgba(114, 246, 229, 0.65), 0 0 1rem rgba(58, 225, 209, 0.4);
+            white-space: nowrap;
+            letter-spacing: .5vh;
+        }
+
+        #alfabeto .indisponivel {
+            color: #697184;
+            filter: grayscale(1);
+            opacity: 0.45;
+            text-shadow: none;
+        }
+
+        #mensagem-partida {
+            color: #ffcf70;
+            font-weight: bold;
+            min-height: 1.5em;
+        }
+
+        .listas {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .listas section {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 1rem;
+            min-width: 10rem;
+            padding: 0.5rem 1rem;
+            text-align: left;
+        }
+
+        @keyframes pulsar {
+            0%, 100% { transform: scale(1); opacity: 0.82; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #numero-contagem {
+                animation: none;
+            }
+
+            button {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Sorteando Uma letra para o jogo de STOP</h1>
+    <main>
+        <section id="configuracao" class="configuracao">
+            <h2>Escolha as letras excluídas no início</h2>
+            <label for="letras-iniciais">Digite as letras que não devem ser sorteadas:</label>
+            <input id="letras-iniciais" type="text" value="KWY" autocomplete="off"
+                autocapitalize="characters" spellcheck="false" aria-describedby="ajuda-letras">
+            <p id="ajuda-letras">Somente A–Z. K, W e Y vêm preenchidas; apague-as se quiser incluí-las.</p>
+            <p id="erro-configuracao" role="alert"></p>
+            <button id="iniciar" type="button">Ok</button>
+        </section>
+
+        <div id="area-jogo" hidden>
+            <section class="painel-sorteio">
+                <div class="tempo-partida">
+                    <span>Tempo restante da partida</span>
+                    <time id="tempo-partida" aria-live="off">--:--</time>
+                </div>
+                <p class="rotulo-contagem">A próxima letra chega em</p>
+                <p id="contagem" role="status" aria-live="polite"><span id="numero-contagem">5</span></p>
+                <p id="letra" aria-live="polite"></p>
+                <pre id="desenho" aria-label="Desenho da letra sorteada"></pre>
+                <button id="sortear" type="button">Sortear outra letra</button>
+                <p id="mensagem-partida" role="status" aria-live="polite"></p>
+                <p id="alfabeto" role="img" aria-label="Alfabeto: letras brilhantes disponíveis; letras cinzas excluídas ou já sorteadas"></p>
+            </section>
+
+            <div class="listas">
+                <section>
+                    <h2>Letras sorteadas</h2>
+                    <ol id="historico" aria-live="polite"></ol>
+                </section>
+                <section>
+                    <h2>Letras excluídas</h2>
+                    <ul id="exclusoes"></ul>
+                </section>
+            </div>
+            <p>Número de partidas jogadas: <span id="tentativas"></span></p>
+        </div>
+    </main>
+
+    <script src="STOP-SorteiaLetra.js"></script>
+</body>
+</html>
