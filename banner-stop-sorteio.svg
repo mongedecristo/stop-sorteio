@@ -36,7 +36,7 @@
       <text x="35" y="166" fill="#72f6e5" font-size="116" font-weight="900" filter="url(#luz)">05</text>
       <circle cx="252" cy="128" r="47" fill="#ffcf70"/>
       <text x="252" y="150" fill="#10172d" font-size="62" font-weight="900" text-anchor="middle">A</text>
-      <text x="34" y="211" fill="#c6d6ff" font-size="14" letter-spacing="2">60 SEGUNDOS · UMA LETRA POR VEZ</text>
+      <text x="160" y="211" fill="#c6d6ff" font-size="12" letter-spacing="1" text-anchor="middle" textLength="272" lengthAdjust="spacingAndGlyphs">60 SEGUNDOS · UMA LETRA POR VEZ</text>
     </g>
   </g>
 </svg>
