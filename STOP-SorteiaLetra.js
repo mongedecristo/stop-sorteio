@@ -7,6 +7,7 @@ let relogioIniciado = false;
 let fimPartida = 0;
 let intervaloPartida = null;
 let ultimoTicTac = null;
+let temporizadoresSorteio = [];
 document.getElementById('tentativas').textContent = partidas;
 
 function preparaAudio() {
@@ -75,9 +76,12 @@ function encerraPartida() {
 
   partidaEncerrada = true;
   window.clearInterval(intervaloPartida);
+  for (const temporizador of temporizadoresSorteio) {
+    clearTimeout(temporizador);
+  }
+  temporizadoresSorteio = [];
   document.getElementById('tempo-partida').textContent = '00:00';
   document.getElementById('mensagem-partida').textContent = 'TEMPO ESGOTADO — FIM DE PARTIDA!';
-  document.getElementById('sortear').disabled = true;
   tocaSomFim();
 }
 
@@ -128,8 +132,15 @@ function atualizaExclusoes() {
 }
 
 function escolheLetra() {
-  if (!partidaIniciada || partidaEncerrada) {
+  if (!partidaIniciada) {
     return;
+  }
+
+  if (partidaEncerrada) {
+    partidaEncerrada = false;
+    relogioIniciado = false;
+    document.getElementById('tempo-partida').textContent = '00:00';
+    document.getElementById('mensagem-partida').textContent = '';
   }
 
   let caractere = '';
@@ -138,10 +149,19 @@ function escolheLetra() {
   const letraElement = document.getElementById('letra');
   const desenhoElement = document.getElementById('desenho');
   const historicoElement = document.getElementById('historico');
-  const botaoSortear = document.getElementById('sortear');
 
-  botaoSortear.disabled = true;
+  for (const temporizador of temporizadoresSorteio) {
+    clearTimeout(temporizador);
+  }
+  temporizadoresSorteio = [];
   atualizaExclusoes();
+
+  function animaDesenho(texto) {
+    desenhoElement.textContent = texto;
+    desenhoElement.classList.remove('animar-3d');
+    void desenhoElement.offsetWidth;
+    desenhoElement.classList.add('animar-3d');
+  }
 
   const formas = {
     A: ['01110', '10001', '10001', '11111', '10001', '10001', '10001'],
@@ -175,7 +195,7 @@ function escolheLetra() {
   function exibeLetraGrande(letra) {
     const desenho = formas[letra];
     if (!desenho) {
-      desenhoElement.textContent = letra;
+      animaDesenho(letra);
       return;
     }
 
@@ -184,11 +204,11 @@ function escolheLetra() {
       const ampliada = [...linha].map(pixel => pixel === '1' ? '████' : '    ').join('');
       linhas.push(ampliada, ampliada);
     }
-    desenhoElement.textContent = linhas.join('\n');
+    animaDesenho(linhas.join('\n'));
   }
   
   function umSegundo(t) {
-    setTimeout(() => {
+    const temporizador = setTimeout(() => {
       if (partidaEncerrada) {
         return;
       }
@@ -207,14 +227,15 @@ function escolheLetra() {
         item.textContent = caractere;
         historicoElement.appendChild(item);
         partidas = historicoElement.children.length;
-        document.getElementById('tentativas').textContent = partidas;
+        document.getElementById('tentativas').textContent = ((partidas < 10) ? '0' : '') + partidas;
         if (repetidas.indexOf(caractere) === -1) {
           repetidas += caractere;
         }
         atualizaExclusoes();
-        botaoSortear.disabled = false;
+        temporizadoresSorteio = [];
       }
-    },1000*t); 
+    },1000*t);
+    temporizadoresSorteio.push(temporizador);
   }
   
   do {

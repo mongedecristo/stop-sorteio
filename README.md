@@ -16,7 +16,7 @@
 
 - **Exclusões personalizáveis:** K, W e Y começam preenchidas. Edite o campo para excluir outras letras ou apague tudo para permitir o alfabeto inteiro.
 - **Entrada organizada:** o campo aceita somente letras de A a Z, converte para maiúsculas e remove repetições quando você confirma.
-- **Sorteio animado:** uma contagem regressiva de cinco segundos anuncia cada letra.
+- **Sorteio animado:** uma contagem regressiva de cinco segundos anuncia cada letra, que surge girando nos três eixos.
 - **Relógio de partida:** o minuto começa depois que a primeira letra aparece — não durante a preparação inicial.
 - **Áudio sintetizado:** há uma fanfarra no início, sinais durante as contagens, tic-tac nos últimos cinco segundos e um alerta marcante no fim.
 - **Acompanhamento visual:** confira o histórico, a lista de exclusões e o alfabeto; letras indisponíveis aparecem apagadas.
@@ -31,8 +31,8 @@
    - Números, espaços, pontuação e caracteres fora de A–Z são descartados.
 3. Clique em **Ok**. Letras repetidas são consolidadas; por exemplo, `kKwYy` fica `KWY`.
 4. A contagem inicial prepara a primeira letra. **O relógio de 01:00 só começa quando essa letra é revelada.**
-5. Depois que cada letra aparece, clique em **Sortear outra letra** para continuar. O botão fica temporariamente indisponível durante o sorteio.
-6. Observe o relógio e o tic-tac final. Ao chegar a `00:00`, a partida termina, o sorteio é desativado e o alerta sonoro toca.
+5. Depois que cada letra aparece, clique em **Sortear outra letra** para continuar. O botão permanece disponível durante a contagem; se clicar antes da revelação, a contagem de cinco segundos recomeça.
+6. Observe o relógio e o tic-tac final. Ao chegar a `00:00`, a partida termina e o alerta sonoro toca. Clique em **Sortear outra letra** para iniciar outro sorteio e reiniciar o relógio; o histórico é mantido.
 
 > **Quer liberar todas as letras?** Deixe o campo de exclusões vazio antes de clicar em **Ok**. Se todas as 26 letras forem excluídas, o jogo pede que você deixe pelo menos uma disponível.
 
@@ -63,4 +63,4 @@ Os efeitos são gerados pelo próprio navegador com **Web Audio API**; o projeto
 
 ## 🏷️ Versão
 
-**v1.0.0** — primeira versão pública do Sorteia Letra.
+**1.1** — animação 3D nos três eixos, botão de sorteio sempre disponível e novo crédito visual.

@@ -35,6 +35,26 @@
             margin: 2rem auto;
             max-width: 34rem;
             padding: 1.5rem;
+            position: relative;
+        }
+
+        .credito-painel {
+            color: #b7c8f5;
+            font-size: x-small;
+            line-height: 1;
+            left: calc(100% + 3px);
+            margin: 0;
+            position: absolute;
+            top: 0.75rem;
+            text-orientation: sideways;
+            white-space: nowrap;
+            writing-mode: vertical-rl;
+            z-index: 1;
+        }
+        
+        .credito-painel a {
+            color: inherit;
+            text-decoration: none;
         }
 
         .configuracao {
@@ -134,6 +154,13 @@
             line-height: 1;
             overflow-x: auto;
             overflow-y: hidden;
+            transform-origin: center;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+        }
+
+        #desenho.animar-3d {
+            animation: surgir-em-3d 950ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
         }
 
         button {
@@ -183,6 +210,11 @@
             min-height: 1.5em;
         }
 
+        .contador-partidas {
+            font-family: "Arial Black", Impact, sans-serif;
+            letter-spacing: 0.08em;
+        }
+
         .listas {
             display: flex;
             flex-wrap: wrap;
@@ -203,8 +235,30 @@
             50% { transform: scale(1.08); opacity: 1; }
         }
 
+        @keyframes surgir-em-3d {
+            0% {
+                opacity: 0;
+                filter: blur(0.5rem);
+                transform: perspective(50rem) rotateX(-540deg) rotateY(-540deg) rotateZ(-180deg) scale(0.15) translateZ(-15rem);
+            }
+            68% {
+                opacity: 1;
+                filter: blur(0);
+                transform: perspective(50rem) rotateX(18deg) rotateY(18deg) rotateZ(12deg) scale(1.08) translateZ(1rem);
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0);
+                transform: perspective(50rem) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1) translateZ(0);
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             #numero-contagem {
+                animation: none;
+            }
+
+            #desenho.animar-3d {
                 animation: none;
             }
 
@@ -229,9 +283,10 @@
 
         <div id="area-jogo" hidden>
             <section class="painel-sorteio">
+                <p class="credito-painel">By <a href="mailto:mongedecristo@hotmail.com">mongedecristo</a> © 2026</p>
                 <div class="tempo-partida">
                     <span>Tempo restante da partida</span>
-                    <time id="tempo-partida" aria-live="off">--:--</time>
+                    <time id="tempo-partida" aria-live="off">01:00</time>
                 </div>
                 <p class="rotulo-contagem">A próxima letra chega em</p>
                 <p id="contagem" role="status" aria-live="polite"><span id="numero-contagem">5</span></p>
@@ -252,7 +307,7 @@
                     <ul id="exclusoes"></ul>
                 </section>
             </div>
-            <p>Número de partidas jogadas: <span id="tentativas"></span></p>
+            <p class="contador-partidas">Número de partidas jogadas: <span id="tentativas"></span></p>
         </div>
     </main>
 
